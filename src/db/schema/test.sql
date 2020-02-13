@@ -1,24 +1,22 @@
--- WITH days(day) AS (
---   VALUES ( 'Monday' ), ( 'Tuesday' )
--- )
--- INSERT INTO days (name)
--- SELECT day FROM days;
 
--- WITH times(time) AS (
--- 	VALUES ('12pm'), ('1pm')
--- )
--- INSERT INTO appointments (time, day_id)
--- SELECT time, id as day_id FROM days, times ORDER BY day_id, time;
+-- Users table seeds --
+INSERT INTO users (name, email, password) VALUES ('Don Stevenson', 'Don@example.com', 'password');
+INSERT INTO users (name, email, password) VALUES ('Daren Beattie', 'Daren@example.com', 'password');
+INSERT INTO users (name, email, password) VALUES ('Kevin Zhu', 'Kevin@example.com', 'password');
 
--- INSERT INTO interviewers (name, avatar)
--- VALUES
---   ('Sylvia Palmer', 'https://i.imgur.com/LpaY82x.png'),
---   ('Tori Malcolm', 'https://i.imgur.com/Nmx0Qxo.png');
+-- Goals table seeds--
+INSERT INTO goals (name, start_date, end_date, cron) VALUES ('Learn the guitar', '2020-01-01', '2020-08-1', 'everyday at 1000');
+INSERT INTO goals (name, start_date, end_date, cron) VALUES ('Reading War and Peace', '2015-09-18', '2020-09-18', 'everyday at 1900');
+INSERT INTO goals (name, start_date, end_date, cron) VALUES ('Codewars', '2019-10-14', '2020-10-14', 'everyday at 900');
 
--- INSERT INTO available_interviewers (day_id, interviewer_id)
--- SELECT 1 as day_id, interviewers.interviewer_id FROM ( SELECT id AS interviewer_id FROM interviewers ) interviewers;
 
--- INSERT INTO available_interviewers (day_id, interviewer_id)
--- SELECT 2 as day_id, interviewers.interviewer_id FROM ( SELECT id AS interviewer_id FROM interviewers ) interviewers;
-
--- INSERT INTO interviews (student, interviewer_id, appointment_id) VALUES ('Archie Cohen', 1, 1);
+-- Nags table seeds --
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you practice guitar for 45 mins today?', 'true', '2020-02-27', '1000');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you practice guitar for 45 mins today?', 'true', '2020-02-26', '1000');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you practice guitar for 45 mins today?', 'true', '2020-02-25', '1000');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you read War and Peace today?', 'true', '2020-02-27', '1900');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you read War and Peace today?', 'false', '2020-02-26', '1900');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you read War and Peace today?', 'true', '2020-02-25', '1900');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you do CodeWars today?', 'true', '2020-02-27','900');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you do CodeWars today?', 'false', '2020-02-26', '900');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you do CodeWars today?', 'false', '2020-02-25', '900');

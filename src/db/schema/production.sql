@@ -1,39 +1,21 @@
-WITH days(day) AS (
-  VALUES ( 'Monday' ), ( 'Tuesday' ), ( 'Wednesday' ), ( 'Thursday' ), ( 'Friday' )
-)
-INSERT INTO days (name)
-SELECT day FROM days;
+-- Users table seeds --
+INSERT INTO users (name, email, password) VALUES ('Don Stevenson', 'Don@example.com', 'password');
+INSERT INTO users (name, email, password) VALUES ('Daren Beattie', 'Daren@example.com', 'password');
+INSERT INTO users (name, email, password) VALUES ('Kevin Zhu', 'Kevin@example.com', 'password');
 
-WITH times(time) AS (
-	VALUES ('12pm'), ('1pm'), ('2pm'), ('3pm'), ('4pm')
-)
-INSERT INTO appointments (time, day_id)
-SELECT time, id as day_id FROM days, times ORDER BY day_id, time;
+-- Goals table seeds--
+INSERT INTO goals (name, start_date, end_date, cron) VALUES ('Learn the guitar', '2020-01-01', '2020-08-1', 'everyday at 1000');
+INSERT INTO goals (name, start_date, end_date, cron) VALUES ('Reading War and Peace', '2015-09-18', '2020-09-18', 'everyday at 1900');
+INSERT INTO goals (name, start_date, end_date, cron) VALUES ('Codewars', '2019-10-14', '2020-10-14', 'everyday at 900');
 
-INSERT INTO interviewers (name, avatar)
-VALUES
-  ('Sylvia Palmer', 'https://i.imgur.com/LpaY82x.png'),
-  ('Tori Malcolm', 'https://i.imgur.com/Nmx0Qxo.png'),
-  ('Mildred Nazir', 'https://i.imgur.com/T2WwVfS.png'),
-  ('Cohana Roy', 'https://i.imgur.com/FK8V841.jpg'),
-  ('Sven Jones', 'https://i.imgur.com/twYrpay.jpg'),
-  ('Susan Reynolds', 'https://i.imgur.com/TdOAdde.jpg'),
-  ('Alec Quon', 'https://i.imgur.com/3tVgsra.jpg'),
-  ('Viktor Jain', 'https://i.imgur.com/iHq8K8Z.jpg'),
-  ('Lindsay Chu', 'https://i.imgur.com/nPywAp1.jpg'),
-  ('Samantha Stanic', 'https://i.imgur.com/okB9WKC.jpg');
 
-INSERT INTO available_interviewers (day_id, interviewer_id)
-SELECT 1 as day_id, interviewers.interviewer_id FROM ( SELECT id AS interviewer_id FROM interviewers ORDER BY RANDOM() LIMIT 5 ) interviewers;
-
-INSERT INTO available_interviewers (day_id, interviewer_id)
-SELECT 2 as day_id, interviewers.interviewer_id FROM ( SELECT id AS interviewer_id FROM interviewers ORDER BY RANDOM() LIMIT 5 ) interviewers;
-
-INSERT INTO available_interviewers (day_id, interviewer_id)
-SELECT 3 as day_id, interviewers.interviewer_id FROM ( SELECT id AS interviewer_id FROM interviewers ORDER BY RANDOM() LIMIT 5 ) interviewers;
-
-INSERT INTO available_interviewers (day_id, interviewer_id)
-SELECT 4 as day_id, interviewers.interviewer_id FROM ( SELECT id AS interviewer_id FROM interviewers ORDER BY RANDOM() LIMIT 5 ) interviewers;
-
-INSERT INTO available_interviewers (day_id, interviewer_id)
-SELECT 5 as day_id, interviewers.interviewer_id FROM ( SELECT id AS interviewer_id FROM interviewers ORDER BY RANDOM() LIMIT 5 ) interviewers;
+-- Nags table seeds --
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you practice guitar for 45 mins today?', 'true', '2020-02-27', '1000');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you practice guitar for 45 mins today?', 'true', '2020-02-26', '1000');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you practice guitar for 45 mins today?', 'true', '2020-02-25', '1000');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you read War and Peace today?', 'true', '2020-02-27', '1900');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you read War and Peace today?', 'false', '2020-02-26', '1900');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you read War and Peace today?', 'true', '2020-02-25', '1900');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you do CodeWars today?', 'true', '2020-02-27', '900');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you do CodeWars today?', 'false', '2020-02-26', '900');
+INSERT INTO nags (name, completion, date, time ) VALUES ('Did you do CodeWars today?', 'false', '2020-02-25', '900');
