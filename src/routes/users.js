@@ -1,24 +1,24 @@
 const router = require("express").Router();
 
 module.exports = (db, updateAppointment) => {
-  router.get("/appointments", (request, response) => {
+  router.get("/users", (request, response) => {
     db.query(
       `
       SELECT
-        appointments.id,
-        appointments.time,
+        users.id,
+        users.time,
         CASE WHEN interviews.id IS NULL
         THEN NULL
         ELSE json_build_object('student', interviews.student, 'interviewer', interviews.interviewer_id)
         END AS interview
-      FROM appointments
-      LEFT JOIN interviews ON interviews.appointment_id = appointments.id
-      GROUP BY appointments.id, interviews.id, interviews.student, interviews.interviewer_id
-      ORDER BY appointments.id
+      FROM users
+      LEFT JOIN interviews ON interviews.appointment_id = users.id
+      GROUP BY users.id, interviews.id, interviews.student, interviews.interviewer_id
+      ORDER BY users.id
     `
-    ).then(({ rows: appointments }) => {
+    ).then(({ rows: users }) => {
       response.json(
-        appointments.reduce(
+        users.reduce(
           (previous, current) => ({ ...previous, [current.id]: current }),
           {}
         )
@@ -26,7 +26,7 @@ module.exports = (db, updateAppointment) => {
     });
   });
 
-  router.put("/appointments/:id", (request, response) => {
+  router.put("/users/:id", (request, response) => {
     if (process.env.TEST_ERROR) {
       setTimeout(() => response.status(500).json({}), 1000);
       return;
