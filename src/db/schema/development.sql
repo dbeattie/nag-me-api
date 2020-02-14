@@ -1,6 +1,6 @@
 -- Users table seeds --
 INSERT INTO users (name, email, password) VALUES ('Don Stevenson', 'Don@example.com', 'password');
-INSERT INTO users (name, email, password) VALUES ('Daren Beattie', 'Daren@example.com', 'password');
+INSERT INTO users (name, email, password) VALUES ('Darren Beattie', 'Darren@example.com', 'password');
 INSERT INTO users (name, email, password) VALUES ('Kevin Zhu', 'Kevin@example.com', 'password');
 
 -- Goals table seeds--
