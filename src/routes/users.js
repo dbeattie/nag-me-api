@@ -16,7 +16,7 @@ module.exports = (db, updateUsers) => {
           {}
         )
       );
-    });
+    }).catch(err => console.log(err));
   });
 
   // router.put("/users/:id", (request, response) => {
