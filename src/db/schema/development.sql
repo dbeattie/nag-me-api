@@ -8,7 +8,6 @@ INSERT INTO goals (name, start_date, end_date, cron) VALUES ('Learn the guitar',
 INSERT INTO goals (name, start_date, end_date, cron) VALUES ('Reading War and Peace', '2015-09-18', '2020-09-18', 'everyday at 1900');
 INSERT INTO goals (name, start_date, end_date, cron) VALUES ('Codewars', '2019-10-14', '2020-10-14', 'everyday at 900');
 
-
 -- Nags table seeds --
 INSERT INTO nags (name, completion, date, time ) VALUES ('Did you practice guitar for 45 mins today?', 'true', '2020-02-27', '1000');
 INSERT INTO nags (name, completion, date, time ) VALUES ('Did you practice guitar for 45 mins today?', 'true', '2020-02-26', '1000');
