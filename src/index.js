@@ -1,5 +1,7 @@
 const PORT = process.env.PORT || 8001;
 const ENV = require("./environment");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 
 const app = require("./application")(ENV); /*,{ updateAppointment });*/
@@ -8,6 +10,10 @@ const server = require("http").Server(app);
 
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server });
+
+
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 wss.on("connection", socket => {
   socket.onmessage = event => {
@@ -18,6 +24,7 @@ wss.on("connection", socket => {
     }
   };
 });
+
 
 // function updateAppointment(id, interview) {
 //   wss.clients.forEach(function eachClient(client) {
