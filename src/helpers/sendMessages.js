@@ -18,7 +18,7 @@ module.exports = sendSMSToMultiplePeople = () => {
   });
 };
 
-// function to send out SMS messages to mulitiple numbers
+// function to send out SMS messages to the user only
 module.exports = sendSMSToNagUserOnly = () => {
   client.messages
     .create({
