@@ -9,7 +9,7 @@ module.exports = sendSMSToMultiplePeople = () => {
     const message = client.messages
       .create({
         //get a real messasge from the body
-        body: `Nag-Me Completion Report: ${user} did / did not complete ${nag} as of midnight on ${new Date}.  ${user} requires copious amounts of public shaming`,
+        body: `Nag-Me Completion Report: ${user} did / did not complete ${nag} as of midnight on ${new Date}. ${user} requires copious amounts of public shaming`,
         from: "+13172155407",
         to: number
       })
