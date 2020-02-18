@@ -133,4 +133,4 @@ router.post('/logout', (req, res) => {
   });
 });
 
-module.exports = router, userId;
+module.exports = router;

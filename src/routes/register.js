@@ -3,20 +3,29 @@ const bcrypt = require("bcrypt");
 
 module.exports = db => {
   router.post("/register", async function(req, res) {
+    
     const { name, email, password } = req.body;
     const user = { name, email, password };
 
+    // console.log('USER:', user)
     if (user.email === "" || user.password === "" || user.name === "") {
       response.statusCode = 400;
       response.end("400 Bad request. Missing name, email or password");
       return;
     }
+    
     const hash = await bcrypt.hash(user.password, 10);
+    // console.log('HASH:', hash)
+    
     const data = await db.query(
       `INSERT INTO users(name, email, password) VALUES($1,$2,$3) RETURNING *;`,
       [user.name, user.email, hash]
     );
-    // req.session.userId = data.rows[0].id
+    
+    const newUser = data.rows[0]
+    // console.log("NEWUSER:", newUser);
+    req.session.userId = newUser.user_id
+
 
 
     // .then(data => {
@@ -37,6 +46,7 @@ module.exports = db => {
     //   }
     // });
   });
+  
   return router;
 };
 

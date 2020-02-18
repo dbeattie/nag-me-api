@@ -13,9 +13,10 @@ const db = require("./db");
 const users = require("./routes/users");
 const goals = require("./routes/goals");
 const nags = require("./routes/nags");
-// const login = require("./routes/login");
-// const register = require("./routes/register");
-const auth = require("./routes/auth");
+const login = require("./routes/login");
+const register = require("./routes/register");
+const logout = require("./routes/logout");
+// const auth = require("./routes/auth");
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -33,21 +34,23 @@ function read(file) {
 }
 
 module.exports = function application(ENV) {
-  app.use(cors());
+  app.use(cors({origin: 'http://localhost:3000', credentials: true}));
   app.use(helmet());
   app.use(bodyparser.json());
 
   app.use(cookieSession({
     name: 'session',
     keys: ['key1', 'key2']
+    
   }));
 
   app.use("/api", users(db));
   app.use("/api", goals(db));
   app.use("/api", nags(db));
-  // app.use("/api", login(db));
-  // app.use("/api", register(db));
-  app.use("/api", auth());
+  app.use("/api", login(db));
+  app.use("/api", register(db));
+  app.use("/api", logout(db));
+  // app.use("/api", auth);
 
   if (ENV === "development" || ENV === "test") {
     Promise.all([
