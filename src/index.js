@@ -34,7 +34,6 @@ wss.on("connection", socket => {
 
 
 // Old Web Socket Query
-=======
 // sending sms to one person
 // client.messages.create({
 //   body: "hi, it works",
@@ -58,14 +57,14 @@ numbersToMessage.forEach(function(number){
 });
 }
 
-console.log('Before job instantiation');
-const job = new CronJob('*/10 * * * * *', function() {
-  sendSMS();
-	const d = new Date();
-	console.log('send SMS every 10 secs:', d);
-});
-console.log('After job instantiation');
-job.start();
+// console.log('Before job instantiation');
+// const job = new CronJob('*/10 * * * * *', function() {
+//   sendSMS();
+// 	const d = new Date();
+// 	console.log('send SMS every 10 secs:', d);
+// });
+// console.log('After job instantiation');
+// job.start();
 
 
 // new CronJob('* * * * * *', function() {
