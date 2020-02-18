@@ -1,12 +1,12 @@
-const cookieSession = require("cookie-session")
-const secret = 'mysecretsshhh';
+
 const router = require("express").Router();
 const bcrypt = require('bcrypt');
+
+
 
 module.exports = db => {
 
     router.post("/authenticate", function(req, res) {
-        console.log(jwt)
         const { email, password } = req.body;
         const user = { email: "larrys@example.com", password: "1234" };
         // if (err) {
@@ -31,10 +31,7 @@ module.exports = db => {
         //       });
         //     } else {
         //       // Issue token
-        const payload = { email };
-        const token = jwt.sign(payload, secret, {
-          expiresIn: "1h"
-        });
+        req.session.user_id = userID
         res.cookie("token", token, { httpOnly: true }).sendStatus(200);
       });
 

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-
+const cookieSession = require("cookie-session")
 const express = require("express");
 const bodyparser = require("body-parser");
 const helmet = require("helmet");
@@ -35,6 +35,11 @@ module.exports = function application(ENV) {
   app.use(cors());
   app.use(helmet());
   app.use(bodyparser.json());
+
+  app.use(cookieSession({
+    name: 'session',
+    keys: ['key1', 'key2']
+  }));
 
   app.use("/api", users(db));
   app.use("/api", goals(db));
