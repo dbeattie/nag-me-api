@@ -1,9 +1,7 @@
-const jwt = require("jsonwebtoken");
+const cookieSession = require("cookie-session")
 const secret = 'mysecretsshhh';
 const router = require("express").Router();
 const bcrypt = require('bcrypt');
-
-
 
 module.exports = db => {
 

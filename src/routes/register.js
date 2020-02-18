@@ -1,22 +1,25 @@
 const router = require("express").Router();
+const bcrypt = require("bcrypt")
 
 module.exports = db => {
- router.post("/register", function(req, res) {
+ router.post("/register", async function(req, res) {
     const { name, email, password } = req.body;
     const user =  {name, email, password};
-
+    // const salt = bcrypt.genSaltSync(10);
+    // const hashedPassword = bcrypt.hashSync(user.password, salt);
     if (user.email === "" || user.password === "" || user.name === "") {
-      response.statusCode = 400;
-      response.end("400 Bad request. Missing name, email or password");
-      return;
+        response.statusCode = 400;
+        response.end("400 Bad request. Missing name, email or password");
+        return;
     } 
-
-    db.query(
-        `INSERT INTO users(name, email, password) VALUES($1,$2,$3) RETURNING *;`,
-      [user.name, user.email, user.password]
-    ).then(data => { console.log(data.rows)
-
-    })
+    const hash = await bcrypt.hash(user.password, 10)
+    
+       const data = await db.query(
+            `INSERT INTO users(name, email, password) VALUES($1,$2,$3) RETURNING *;`,
+          [user.name, user.email, hash]
+        )
+        console.log(data)
+ 
     // .then(data => {
     //   const user = data.rows[0];
     //   if (user) {
