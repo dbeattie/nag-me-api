@@ -34,7 +34,7 @@ function read(file) {
 }
 
 module.exports = function application(ENV) {
-  /*cors is currently hardcoded, it will fail if we push this condition to a new Heroku database or netlify --> Can create an array that should tolerate multiple URL's*/
+  /*cors is currently hardcoded, it will fail if we push this condition to a new Heroku database or netlify --> Can create an array that should tolerate multiple URL's but will need to look up documentation*/
   app.use(cors({origin: 'http://localhost:3000', credentials: true}));
   app.use(helmet());
   app.use(bodyparser.json());
