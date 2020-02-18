@@ -1,9 +1,15 @@
 const PORT = process.env.PORT || 8001;
 const ENV = require("./environment");
+
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+
+
 const accountSid = process.env.accountSid;
 const authToken = process.env.authToken;
 const client = require('twilio')(accountSid, authToken);
 const CronJob = require('cron').CronJob;
+
 
 const app = require("./application")(ENV); /*,{ updateAppointment });*/
 
@@ -11,6 +17,10 @@ const server = require("http").Server(app);
 
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server });
+
+
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 wss.on("connection", socket => {
   socket.onmessage = event => {
@@ -22,6 +32,9 @@ wss.on("connection", socket => {
   };
 });
 
+
+// Old Web Socket Query
+=======
 // sending sms to one person
 // client.messages.create({
 //   body: "hi, it works",
@@ -67,6 +80,7 @@ job.start();
 // });
 // console.log('After job instantiation');
 // job.start();
+
 
 // function updateAppointment(id, interview) {
 //   wss.clients.forEach(function eachClient(client) {
