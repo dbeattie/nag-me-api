@@ -13,8 +13,9 @@ const db = require("./db");
 const users = require("./routes/users");
 const goals = require("./routes/goals");
 const nags = require("./routes/nags");
-const login = require("./routes/login");
-const register = require("./routes/register");
+// const login = require("./routes/login");
+// const register = require("./routes/register");
+const auth = require("./routes/auth");
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -44,8 +45,9 @@ module.exports = function application(ENV) {
   app.use("/api", users(db));
   app.use("/api", goals(db));
   app.use("/api", nags(db));
-  app.use("/api", login(db));
-  app.use("/api", register(db));
+  // app.use("/api", login(db));
+  // app.use("/api", register(db));
+  app.use("/api", auth());
 
   if (ENV === "development" || ENV === "test") {
     Promise.all([
