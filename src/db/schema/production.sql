@@ -11,7 +11,6 @@ INSERT INTO users
     (name, email, password, phone_number)
 VALUES
     ('Kevin Zhu', 'Kevin@example.com', 'password', '+14166487618');
-
 -- Goals table seeds-- 
 INSERT INTO goals
     (name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number)
@@ -25,6 +24,10 @@ INSERT INTO goals
     (name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number)
 VALUES
     ('Codewars', 3, '2019-10-14', '2020-10-14', 'everyday at 900', '+17788480760', '+14169090083');
+INSERT INTO goals
+    (name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number)
+VALUES
+    ('Whiteboard', 3, '2019-10-14', '2020-10-14', 'everyday at 900', '+17788480760', '+14169090083');
 
 -- Nags table seeds --
 INSERT INTO nags
@@ -63,3 +66,7 @@ INSERT INTO nags
     (goal_id, name, completion, date, time )
 VALUES
     (3, 'Did you do CodeWars today?', 'false', '2020-02-25', '1100');
+
+INSERT INTO nags (goal_id, name, completion, date, time ) VALUES (4, 'Did you practice white boarding today?', 'true', '2020-02-18', '1100');
+INSERT INTO nags (goal_id, name, completion, date, time ) VALUES (4, 'Did you practice white boarding today?', 'false', '2020-02-18', '1900');
+INSERT INTO nags (goal_id, name, completion, date, time ) VALUES (4, 'Did you practice white boarding today?', 'false', '2020-02-18', '2200');
