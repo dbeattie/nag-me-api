@@ -1,8 +1,13 @@
 const PORT = process.env.PORT || 8001;
 const ENV = require("./environment");
+
 const sendSMSToMuliplePeople = require("./helpers/sendMessages");
 const sendSMSToNagUserOnly = require(".helpers/sendMessages")
 const CronJob = require("cron").CronJob;
+
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+
 
 const app = require("./application")(ENV); /*,{ updateAppointment });*/
 
@@ -10,6 +15,10 @@ const server = require("http").Server(app);
 
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server });
+
+
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 wss.on("connection", socket => {
   socket.onmessage = event => {
@@ -29,12 +38,14 @@ const sendUserNagAt6am = new CronJob('00 00 6 * * *', function() {
 sendUserNagAt6am.start()
 
 
+
 const sendNagStatsToEveryoneInYourGroupAtMidnight = new CronJob('00 00 00 * * *', function() {
   const d = new Date();
   sendSMSToNagUserOnly()
 	console.log('SMS Sent at Midnight:', d);
 });
 sendNagStatsToEveryoneInYourGroupAtMidnight.start();
+
 
 
 // function updateAppointment(id, interview) {
