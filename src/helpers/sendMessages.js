@@ -4,7 +4,7 @@ const client = require("twilio")(accountSid, authToken);
 const numbersToMessage = ["+14169090083", "+14166487618", "+17788480760"];
 
 // function to send out SMS messages to mulitiple numbers
-module.exports = sendSMSToMultiplePeople = () => {
+const sendSMSToMultiplePeople = () => {
   numbersToMessage.forEach(function(number) {
     const message = client.messages
       .create({
@@ -19,7 +19,7 @@ module.exports = sendSMSToMultiplePeople = () => {
 };
 
 // function to send out SMS messages to the user only
-module.exports = sendSMSToNagUserOnly = () => {
+const sendSMSToNagUserOnly = () => {
   client.messages
     .create({
       //get a real messasge from the body
@@ -30,3 +30,5 @@ module.exports = sendSMSToNagUserOnly = () => {
     .then(message => console.log(message.status))
     .done();
 };
+
+module.exports = sendSMSToNagUserOnly, sendSMSToMultiplePeople
