@@ -1,14 +1,12 @@
 const PORT = process.env.PORT || 8001;
 const ENV = require("./environment");
 
+const sendSMSToMuliplePeople = require("./helpers/sendMessages");
+const sendSMSToNagUserOnly = require(".helpers/sendMessages")
+const CronJob = require("cron").CronJob;
+
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-
-
-const accountSid = process.env.accountSid;
-const authToken = process.env.authToken;
-const client = require('twilio')(accountSid, authToken);
-const CronJob = require('cron').CronJob;
 
 
 const app = require("./application")(ENV); /*,{ updateAppointment });*/
@@ -31,7 +29,6 @@ wss.on("connection", socket => {
     }
   };
 });
-
 
 // Old Web Socket Query
 // sending sms to one person
@@ -66,20 +63,19 @@ numbersToMessage.forEach(function(number){
 // console.log('After job instantiation');
 // job.start();
 
+const sendUserNagAt6am = new CronJob('00 00 6 * * *', function() {
+  const d = new Date();
+  sendSMSToMuliplePeople()
+	console.log('SMS Sent at 6am:', d);
+});
+sendUserNagAt6am.start()
 
-// new CronJob('* * * * * *', function() {
-//   console.log('You will see this message every second');
-// }, null, true, 'America/Los_Angeles');
-
-
-// console.log('Before job instantiation');
-// const job = new CronJob('0 */10 * * * *', function() {
-// 	const d = new Date();
-// 	console.log('Every Tenth Minute:', d);
-// });
-// console.log('After job instantiation');
-// job.start();
-
+const sendNagStatsToEveryoneInYourGroupAtMidnight = new CronJob('00 00 00 * * *', function() {
+  const d = new Date();
+  sendSMSToNagUserOnly()
+	console.log('SMS Sent at Midnight:', d);
+});
+sendNagStatsToEveryoneInYourGroupAtMidnight.start();
 
 // function updateAppointment(id, interview) {
 //   wss.clients.forEach(function eachClient(client) {
