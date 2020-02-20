@@ -18,7 +18,7 @@ module.exports = db => {
       const hash = await bcrypt.hash(user.password, 10);
       console.log('HASH:', hash)
       
-      const queryString = `INSERT INTO users(name, email, password, phone_number) VALUES($1,$2,$3,$4) RETURNING *;`
+      const queryString = `INSERT INTO users(user_name, email, password, phone_number) VALUES($1,$2,$3,$4) RETURNING *;`
 
       const data = await db.query(queryString, 
         [user.name, user.email, hash, user.phone_number]);
