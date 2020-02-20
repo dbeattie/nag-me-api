@@ -76,7 +76,7 @@ router.get("/nags/incomplete/morningnags", (request, response) => {
             `
       ).then(({ rows: goals }) => {
         response.json(goals)
-        sendSMSToMultiplePeople(goals)
+        //sendSMSToMultiplePeople(goals)
       });
 
     }).catch(err => {console.error(err)})
