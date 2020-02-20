@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const {sendSMSToMultiplePeople} = require("../helpers/sendMessages");
+const {sendSMSToMultiplePeople6AM, sendSMSToMultiplePeople12AM} = require("../helpers/sendMessages");
 
 
 module.exports = db => {
@@ -13,8 +13,8 @@ module.exports = db => {
     });
   });
 
-// this route returns an array of objects of the phone numbers of the 
-// friends of the user when the nag was incomplete on the day
+// this route sends a message to the
+// friends of the user when the nag was incomplete at midnight day
   router.get("/nags/incomplete/eveningnags", (request, response) => {
     db.query(
         `
@@ -35,19 +35,20 @@ module.exports = db => {
         db.query(
           // we really need the two phone numbers below
           ` 
-            SELECT * FROM goals
-              WHERE goals.id IN (${goalIdfind(nags)})
-              ;
-              `
+          SELECT * FROM users
+          JOIN goals ON user_id = users.id
+          WHERE goals.id IN (${goalIdfind(nags)})
+            ;`
         ).then(({ rows: goals }) => {
           response.json(goals);
+          //sendSMSToMultiplePeople12AM(goals)
         });
 
       }).catch(err => {console.error(err)})
  });
 
 // morning nags
-// friends of the user when the nag was incomplete on the day
+// send to users at the begining of the day
 router.get("/nags/incomplete/morningnags", (request, response) => {
   db.query(
     `
@@ -76,7 +77,7 @@ router.get("/nags/incomplete/morningnags", (request, response) => {
             `
       ).then(({ rows: goals }) => {
         response.json(goals)
-        //sendSMSToMultiplePeople(goals)
+        //sendSMSToMultiplePeople6AM(goals)
       });
 
     }).catch(err => {console.error(err)})

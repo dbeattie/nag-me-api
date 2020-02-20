@@ -2,13 +2,6 @@ const accountSid = process.env.accountSid;
 const authToken = process.env.authToken;
 const client = require("twilio")(accountSid, authToken);
 
-
-// function to send out SMS messages to mulitiple [person]
-const sendSMSToMultiplePeople = (mulitiplePeople) => {
-  console.log("++++++++++ ", mulitiplePeople)
-  mulitiplePeople.forEach(sendSMSToNagUserOnly);
-};
-
 //*********EXAMPLE OF USER OBJECT TO SEND A NAG TO*****************/
 // {
 //   id: 3,
@@ -25,9 +18,17 @@ const sendSMSToMultiplePeople = (mulitiplePeople) => {
 //   friend_2_phone_number: '+14169090083'
 // }
 
-// function to send out SMS messages to the user only
-const sendSMSToNagUserOnly = (person) => {
-  console.log(">>>>>>>>>>>>",person)
+// function to send out SMS messages to mulitiple [person] 6 AM
+const sendSMSToMultiplePeople6AM = (mulitiplePeople) => {
+  console.log("++++++++++ ", mulitiplePeople)
+  mulitiplePeople.forEach(sendSMSToNagUserOnly6AM);
+};
+
+
+// function to send out SMS messages to the user only 6 AM
+const sendSMSToNagUserOnly6AM = (person) => {
+  console.log(">>>>>>>>>>>>", person)
+
   client.messages
     .create({
       //get a real messasge from the body
@@ -37,6 +38,37 @@ const sendSMSToNagUserOnly = (person) => {
     })
     .then(message => console.log(message.status))
     .done();
+
 };
 
-module.exports ={ sendSMSToNagUserOnly, sendSMSToMultiplePeople}
+
+// function to send out SMS messages to mulitiple [person] 12AM
+const sendSMSToMultiplePeople12AM = (mulitiplePeople) => {
+  console.log("++++++++++ ", mulitiplePeople)
+  mulitiplePeople.forEach(sendSMSToNagUserOnly12AM);
+};
+
+
+// function to send out SMS messages to the user only 12AM
+const sendSMSToNagUserOnly12AM = (person) => {
+  console.log(">>>>>>>>>>>>", person)
+
+  client.messages
+    .create({
+      //get a real messasge from the body
+      body: `Greetings from Nag-Me.com!! ${person.user_name} is working towards the goal of ${person.goal_name}. They did not complete their task for the day, ${person.user_name} requires an exorbitant amount of public shaming! `,
+      from: "+13172155407",
+      to: person.friend_1_phone_number,
+    })
+    .create({
+      //get a real messasge from the body
+      body: `Greetings from Nag-Me.com!! ${person.user_name} is working towards the goal of ${person.goal_name}. They did not complete their task for the day, ${person.user_name} requires an exorbitant amount of public shaming! `,
+      from: "+13172155407",
+      to: person.friend_2_phone_number
+    })
+    .then(message => console.log(message.status))
+    .done();
+
+};
+
+module.exports ={ sendSMSToMultiplePeople6AM, sendSMSToMultiplePeople12AM}
