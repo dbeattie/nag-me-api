@@ -41,15 +41,14 @@ const sendSMSToNagUserOnly6AM = (person) => {
 
 };
 
-
 // function to send out SMS messages to mulitiple [person] 12AM
 const sendSMSToMultiplePeople12AM = (mulitiplePeople) => {
   console.log("++++++++++ ", mulitiplePeople)
   mulitiplePeople.forEach(sendSMSToNagUserOnly12AM);
 };
 
-
 // function to send out SMS messages to the user only 12AM
+// TRY THIS OUT TO MAKE SURE IT WORKS
 const sendSMSToNagUserOnly12AM = (person) => {
   console.log(">>>>>>>>>>>>", person)
 
