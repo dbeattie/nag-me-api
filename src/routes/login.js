@@ -3,10 +3,9 @@ const bcrypt = require('bcrypt');
 
 module.exports = db => {
 
-  router.post("/authenticate", async function(req, res) {
+  router.post("/login", async function(req, res) {
     
     const { email, password } = req.body;
-    
     const user = { email, password };
     
     console.log('USER:', user)
