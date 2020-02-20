@@ -14,6 +14,7 @@ module.exports = db => {
 
   //user_id is hard coded for now...
   router.put("/goals/new", (req, res) => {
+    req.connection.setTimeout( 1000 * 60 * 10 );
     // console.log(req.body);
     const queryString = 'INSERT INTO goals(name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
     const values = [req.body.goal, 1, req.body.startdate, req.body.enddate, 'everyday at 1000', req.body.phone1, req.body.phone2]
@@ -31,9 +32,9 @@ module.exports = db => {
         };
         const startDate = getDate(req.body.startdate);
         const endDate = getDate(req.body.enddate);
-        console.log ("new Date is here: ", startDate, endDate );
+        // console.log ("new Date is here: ", startDate, endDate );
 
-        //use dateArray to store the dates to be insert into "nags" table.
+        //use dateArray to store the dates to be insert into "nags" table's date column.
         let dateArray = [];
         let actualEndDate = new Date(endDate);
         for (let d = new Date(startDate); d <= actualEndDate; d.setDate(d.getDate() + 1)){
