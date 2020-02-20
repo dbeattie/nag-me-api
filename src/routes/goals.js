@@ -16,7 +16,7 @@ module.exports = db => {
   router.put("/goals/new", (req, res) => {
     req.connection.setTimeout( 1000 * 60 * 10 );
     // console.log(req.body);
-    const queryString = 'INSERT INTO goals(name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+    const queryString = 'INSERT INTO goals(goal_name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
     const values = [req.body.goal, 1, req.body.startdate, req.body.enddate, 'everyday at 1000', req.body.phone1, req.body.phone2]
 
     db.query(queryString, values, (err, res) => {
@@ -42,7 +42,7 @@ module.exports = db => {
         }
         console.log(dateArray);
 
-        const startNagQuery = `INSERT INTO nags (goal_id, name, completion, date, time)
+        const startNagQuery = `INSERT INTO nags (goal_id, nag_name, completion, date, time)
         VALUES `;
         const endNagQuery = ` ,'1900'), `;
         const finalNagQuery = (startQuery, endQuery, passinDateArray) => {
