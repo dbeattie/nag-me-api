@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(255) NOT NULL,
+  user_name VARCHAR(255) NOT NULL,
   email text UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
   phone_number VARCHAR(15) NOT NULL
@@ -12,7 +12,7 @@ CREATE TABLE users (
 
 CREATE TABLE goals (
   id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(255) NOT NULL,
+  goal_name VARCHAR(255) NOT NULL,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   start_date DATE,
   end_date DATE,
@@ -24,7 +24,7 @@ CREATE TABLE goals (
 CREATE TABLE nags (
   id SERIAL PRIMARY KEY NOT NULL,
   goal_id INTEGER NOT NULL REFERENCES goals(id) ON DELETE CASCADE,
-  name VARCHAR(255) NOT NULL,
+  nag_name VARCHAR(255) NOT NULL,
   completion BOOLEAN,
   date DATE,
   time TIME
