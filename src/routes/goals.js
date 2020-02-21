@@ -17,7 +17,7 @@ module.exports = db => {
     req.connection.setTimeout( 1000 * 60 * 10 );
     // console.log(req.body);
     const queryString = 'INSERT INTO goals(goal_name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
-    const values = [req.body.goal, 1, req.body.startdate, req.body.enddate, 'everyday at 1000', req.body.phone1, req.body.phone2]
+    const values = [req.body.goal, 1, req.body.startdate, req.body.enddate, 'everyday at 1000', req.body.phone1, req.body.phone2];
 
     db.query(queryString, values, (err, res) => {
       if(err) {
@@ -66,6 +66,23 @@ module.exports = db => {
         })
       }
     })
+  })
+
+  router.put("/goals/delete", (req, res) => {
+    req.connection.setTimeout( 1000 * 60 * 100 );
+    console.log(req.body.id);
+    console.log(typeof req.body.id);
+    const queryString = 'DELETE FROM goals WHERE id = $1';
+    const values = [req.body.id];
+    db.query(queryString, values, (err, res) => {
+      if(err) {
+        console.log(err.stack);
+      } else {
+        console.log("Deletion completed!");
+      }
+      // db.end();
+    });
+    res.send("hello, i am from backend after deletion!");
   })
 
   return router;
