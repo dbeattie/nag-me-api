@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 module.exports = db => {
   router.get("/goals", (request, response) => {
-    db.query(`SELECT * FROM goals ORDER BY goals.id`).then(({ rows: goals }) => {
+    db.query(`SELECT id, goal_name, user_id, to_char(start_date,'FMMonth FMDDth, YYYY') as start_date, to_char(end_date,'FMMonth FMDDth, YYYY') as end_date, cron, friend_1_phone_number, friend_2_phone_number FROM goals ORDER BY goals.id`).then(({ rows: goals }) => {
       response.json(
         goals.reduce(
           (previous, current) => ({ ...previous, [current.id]: current }),
@@ -17,7 +17,7 @@ module.exports = db => {
     req.connection.setTimeout( 1000 * 60 * 10 );
     // console.log(req.body);
     const queryString = 'INSERT INTO goals(goal_name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
-    const values = [req.body.goal, 1, req.body.startdate, req.body.enddate, 'everyday at 1000', req.body.phone1, req.body.phone2];
+    const values = [req.body.goal, req.body.user, req.body.startdate, req.body.enddate, 'everyday at 1000', req.body.phone1, req.body.phone2];
 
     db.query(queryString, values, (err, res) => {
       if(err) {
