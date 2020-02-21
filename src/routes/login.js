@@ -3,12 +3,24 @@ const bcrypt = require('bcrypt');
 
 module.exports = db => {
 
+  router.get('/auth', (req, res) => {
+    if (req.session.userId) {
+      res.json({
+        result: "true"
+      })
+    } else {
+      res.json({
+        result: "false"
+      })
+    }  
+  });
+
   router.post("/login", async function(req, res) {
     
     const { email, password } = req.body;
     const user = { email, password };
     
-    console.log('USER:', user)
+    // console.log('USER:', user)
 
     const data = await db.query(
       `SELECT * FROM users WHERE email = $1`,
@@ -22,22 +34,23 @@ module.exports = db => {
           });
     }
 
-    console.log('data.rows.length', data.rows.length)
+    // console.log('data.rows.length', data.rows.length)
   
     const result = await bcrypt.compare(user.password, data.rows[0].password)
     
-    console.log("REQ SESSION:", req.session.isNew);
+    // console.log("REQ SESSION:", req.session.isNew);
     if (result) {
       req.session.userId = data.rows[0].id;
-      console.log("REQ.SESSION.USER_ID:", req.session.userId)
+      // console.log("REQ.SESSION.USER_ID:", req.session.userId)
       res.json({
         result,
-        message: "logged in"
+        message: "logged in",
+        id: data.rows[0].id
       });
     } else {
       res.json({
         result,
-        message: "wrong pw"
+        message: "wrong password"
       });
     } 
 
