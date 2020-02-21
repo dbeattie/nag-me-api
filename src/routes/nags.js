@@ -8,7 +8,7 @@ module.exports = db => {
   router.get("/nags", (request, response) => {
     db.query(
       `
-        SELECT * FROM nags ORDER BY nags.id;
+        SELECT id, goal_id, nag_name, completion, to_char(date,'FMMonth FMDDth, YYYY') as date FROM nags ORDER BY nags.id;
       `
     ).then(({ rows: nags }) => {
       response.json(nags);

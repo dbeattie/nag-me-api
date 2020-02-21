@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 module.exports = db => {
 
   router.get('/auth', (req, res) => {
-    console.log("SESSION.USERID", req.session.userId)
+    // console.log("SESSION.USERID", req.session.userId)
     if (req.session.userId) {
       res.json({
         result: "true",
