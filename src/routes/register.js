@@ -7,7 +7,7 @@ module.exports = db => {
       const { name, email, password, phone_number } = req.body;
       const user = { name, email, password, phone_number };
 
-      console.log('USER:', user)
+      // console.log('USER:', user)
       if (user.email === "" || user.password === "" || user.name === "" || user.phone_number === "") {
         res.json({
           result,
@@ -16,7 +16,7 @@ module.exports = db => {
       }
       
       const hash = await bcrypt.hash(user.password, 10);
-      console.log('HASH:', hash)
+      // console.log('HASH:', hash)
       
       const queryString = `INSERT INTO users(user_name, email, password, phone_number) VALUES($1,$2,$3,$4) RETURNING *;`
 
@@ -24,11 +24,12 @@ module.exports = db => {
         [user.name, user.email, hash, user.phone_number]);
 
       const newUser = data.rows[0]
-      console.log("NEWUSER:", newUser);
+      // console.log("NEWUSER:", newUser);
       req.session.userId = newUser.id
       res.json({
         result: true,
-        message: "It's all good baby...baby..."
+        message: "It's all good baby...baby...",
+        id: newUser.id
       });
     } catch (error) {
       console.log(error)
