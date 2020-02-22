@@ -30,7 +30,7 @@ module.exports = db => {
     );
 
     if (data.rows.length === 0) {
-      res.json({
+      res.status(401).json({
             result: false,
             message: "user not found"
           });
@@ -50,7 +50,7 @@ module.exports = db => {
         id: data.rows[0].id
       });
     } else {
-      res.json({
+      res.status(401).json({
         result,
         message: "wrong password"
       });
