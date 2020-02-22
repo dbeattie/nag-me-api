@@ -18,19 +18,15 @@ module.exports = db => {
       const hash = await bcrypt.hash(user.password, 10);
       // console.log('HASH:', hash)
       
-      const queryString = `INSERT INTO users(user_name, email, password, phone_number) VALUES($1,$2,$3,$4) RETURNING *;`
+      const queryString = `INSERT INTO users(user_name, email, password, phone_number) VALUES($1,$2,$3,$4) RETURNING id, user_name, email, phone_number;`
 
       const data = await db.query(queryString, 
         [user.name, user.email, hash, user.phone_number]);
 
       const newUser = data.rows[0]
-      // console.log("NEWUSER:", newUser);
+      console.log("NEWUSER:", newUser);
       req.session.userId = newUser.id
-      res.json({
-        result: true,
-        message: "It's all good baby...baby...",
-        id: newUser.id
-      });
+      res.json({ user: newUser });
     } catch (error) {
       console.log(error)
     }
