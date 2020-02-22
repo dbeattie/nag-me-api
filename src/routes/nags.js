@@ -86,5 +86,32 @@ module.exports = db => {
       });
   });
 
+  //logic to update the server so nag equals true
+  router.post("/nags/toggletrue", (request, response) => {
+    console.log(request.body);
+    db.query(
+      `
+      UPDATE nags
+      SET completion = true
+      WHERE id = ${request.body.id};
+      `
+    ).then(result => {
+      response.json(result.data);
+    });
+  });
+
+  //logic to update the server so nag equals false
+  router.post("/nags/togglefalse", (request, response) => {
+    console.log(request.body);
+    db.query(
+      `
+        UPDATE nags
+        SET completion = false
+        WHERE id = ${request.body.id};
+        `
+    ).then(result => {
+      response.json(result.data);
+    });
+  });
   return router;
 };
