@@ -9,12 +9,12 @@ module.exports = db => {
     // console.log("SESSION.USERID", req.session.userId)
     if (req.session.userId) {
       res.json({
-        result: "true",
+        result: true,
         id: req.session.userId
       })
     } else {
       res.json({
-        result: "false"
+        result: false
       })
     }  
   });
