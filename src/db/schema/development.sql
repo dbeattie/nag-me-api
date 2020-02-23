@@ -2,15 +2,15 @@
 INSERT INTO users
     (user_name, email, password, phone_number)
 VALUES
-    ('Don Stevenson', 'Don@example.com', 'password', '+14169090083');
+    ('Don Stevenson', 'don@example.com', '$2b$10$6tuTDox7dVe3rrTZqmsGKONQ8ZvcWCokjFmYtmIKdsNoWS5bXp1Oy', '+14169090083');
 INSERT INTO users
     (user_name, email, password, phone_number)
 VALUES
-    ('Darren Beattie', 'Darren@example.com', 'password', '+17788480760');
+    ('Darren Beattie', 'darren@example.com', '$2b$10$6tuTDox7dVe3rrTZqmsGKONQ8ZvcWCokjFmYtmIKdsNoWS5bXp1Oy', '+17788480760');
 INSERT INTO users
     (user_name, email, password, phone_number)
 VALUES
-    ('Kevin Zhu', 'Kevin@example.com', 'password', '+14166487618');
+    ('Kevin Zhu', 'kevin@example.com', '$2b$10$6tuTDox7dVe3rrTZqmsGKONQ8ZvcWCokjFmYtmIKdsNoWS5bXp1Oy', '+14166487618');
 
 -- Goals table seeds-- 
 INSERT INTO goals
