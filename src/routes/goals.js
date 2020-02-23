@@ -66,6 +66,7 @@ module.exports = db => {
         })
       }
     })
+    res.send("hello, i am from backend after adding new goal!");
   })
 
   router.put("/goals/delete", (req, res) => {
@@ -146,6 +147,7 @@ module.exports = db => {
         })
       }
     });
+    res.send("hello, i am from backend after edit!");
   })
 
   return router;
