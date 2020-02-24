@@ -1,17 +1,19 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 
+//IF YOU'RE WORKING ON ROUTES USE req/res convention!!!
+
 module.exports = db => {
-  router.post("/register", async function(req, res) {
+  router.post("/register", async (req, res) => {
     try {
       const { name, email, password, phone_number } = req.body;
       const user = { name, email, password, phone_number };
 
       // console.log('USER:', user)
       if (user.email === "" || user.password === "" || user.name === "" || user.phone_number === "") {
-        res.json({
+        res.status(400).json({
           result,
-          message: "400 Bad request. Missing name, email or password"
+          message: "400 Bad request. Missing name, email, password or phone number."
         });
       }
       
@@ -24,9 +26,10 @@ module.exports = db => {
         [user.name, user.email, hash, user.phone_number]);
 
       const newUser = data.rows[0]
-      console.log("NEWUSER:", newUser);
+      // console.log("NEWUSER:", newUser);
       req.session.userId = newUser.id
       res.json({ user: newUser });
+    
     } catch (error) {
       console.log(error)
     }
