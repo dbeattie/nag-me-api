@@ -79,7 +79,7 @@ module.exports = db => {
         const endValues = ` ,'1900'),`;
         
         arr.forEach(item => {
-          valuesQuery = valuesQuery + `(${req.session.userId}, '${newGoal.nag}', false, ` + `'${item}'` + endValues;
+          valuesQuery = valuesQuery + `(${req.session.userId}, '${newGoal.nag}', null, ` + `'${item}'` + endValues;
         });
         let returnString = startNagQuery + valuesQuery;
         return returnString.slice(0, -1) + `;`;

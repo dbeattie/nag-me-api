@@ -19,8 +19,10 @@ module.exports = db => {
         FROM nags 
         JOIN goals ON goal_id = goals.id
         WHERE user_id = $1
+        AND date >= current_date 
+        AND completion IS NULL 
         ORDER BY ID;
-      `
+        `
       const data = await db.query(nagsQuery, [req.session.userId]);
       // console.log(data.rows);
       res.json(data.rows);
@@ -103,15 +105,16 @@ module.exports = db => {
 
   //logic to update the server so nag equals true
   router.post("/nags/toggletrue", (req, res) => {
-    // console.log(req.body);
+    console.log("toggle true req body is ",req.body);
     db.query(
       `
       UPDATE nags
       SET completion = true
-      WHERE id = ${req.body.id};
-      `
-    ).then(result => {
-      res.json(result.data);
+      WHERE id = $1;
+      `, [req.body.id]
+      ).then(result => {
+        console.log("result of toggle true ", result)
+        res.json(result.data);
     });
   });
 
@@ -122,8 +125,8 @@ module.exports = db => {
       `
         UPDATE nags
         SET completion = false
-        WHERE id = ${req.body.id};
-        `
+        WHERE id = $1;
+        `, [req.body.id]
     ).then(result => {
       res.json(result.data);
     });
