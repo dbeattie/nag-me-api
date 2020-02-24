@@ -20,7 +20,7 @@ module.exports = db => {
         JOIN goals ON goal_id = goals.id
         WHERE user_id = $1
         AND date >= current_date 
-        AND completion IS NOT TRUE  
+        AND completion IS NULL 
         ORDER BY ID;
         `
       const data = await db.query(nagsQuery, [req.session.userId]);
