@@ -15,7 +15,7 @@ module.exports = db => {
       }
 
       const nagsQuery = `
-        SELECT nags.id as ID, goal_id, nag_name, completion, to_char(date,'FMMonth FMDDth, YYYY') as date
+        SELECT nags.id as ID, goal_id, nag_name, completion, date, to_char(date,'FMMonth FMDDth, YYYY') as simple_date
         FROM nags 
         JOIN goals ON goal_id = goals.id
         WHERE user_id = $1
