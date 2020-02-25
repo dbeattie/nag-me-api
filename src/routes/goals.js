@@ -46,7 +46,7 @@ module.exports = db => {
 
       //Puts goal data into database
       const goalQuery = await db.query(goalQueryStr, values);
-      console.log("Goal Inserted!")
+      console.log("Goal Inserted!", goalQuery.rows[0].id)
 
       //Parses the timestamp, only keeps year month day for insertion
       const getDate = dateTime => {
@@ -79,14 +79,14 @@ module.exports = db => {
         const endValues = ` ,'1900'),`;
         
         arr.forEach(item => {
-          valuesQuery = valuesQuery + `(${req.session.userId}, '${newGoal.nag}', null, ` + `'${item}'` + endValues;
+          valuesQuery = valuesQuery + `(${goalQuery.rows[0].id}, '${newGoal.nag}', null, ` + `'${item}'` + endValues;
         });
         let returnString = startNagQuery + valuesQuery;
         return returnString.slice(0, -1) + `;`;
       }
 
       const finalNagQuery = nagQuery(dateQueryArr);
-      
+      console.log("final nag q ", finalNagQuery)
       //Puts nag data into database based
       const nagsQuery = await db.query(finalNagQuery);
       console.log("Nags Inserted!")
@@ -105,7 +105,7 @@ module.exports = db => {
     try {
       // This timeout was added before switching to async/await, not sure they are needed anymore?
       // req.connection.setTimeout( 1000 * 60 * 100 );
-      // console.log('REQUIRED BODY:', req.body);
+      console.log('REQUIRED BODY:', req.body.id);
     
       const queryString = 'DELETE FROM goals WHERE id = $1';
       const values = [req.body.id];

@@ -11,7 +11,7 @@ module.exports = db => {
     try {
       // console.log({ session: req.session })
       if (!req.session.userId) {
-        return res.status(401).json({ message: 'Not authorized' });
+        return res.status(401).json({ message: "Not authorized" });
       }
 
       const nagsQuery = `
@@ -22,13 +22,45 @@ module.exports = db => {
         AND date >= current_date 
         AND completion IS NULL 
         ORDER BY ID;
-        `
+        `;
       const data = await db.query(nagsQuery, [req.session.userId]);
       // console.log(data.rows);
       res.json(data.rows);
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
-    } catch(error) {
-      console.log(error)
+  router.get("/nags/completiondata", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ message: "Not authorized" });
+      }
+
+      const nagsQuery = `
+        SELECT nags.id as ID, goal_id, nag_name, completion, to_char(date,'FMMonth FMDDth, YYYY') as date
+        FROM nags 
+        JOIN goals ON goal_id = goals.id
+        WHERE user_id = $1
+        ORDER BY ID;
+        `;
+      const data = await db.query(nagsQuery, [req.session.userId]);
+
+      let nagTrueCount = 0;
+      let nagFalseCount = 0;
+      let nagNullCount = 0;
+      data.rows.forEach(element => {
+        if (element.completion === true) {
+          nagTrueCount++;
+        } else if (element.completion === false) {
+          nagFalseCount++;
+        } else if (element.completion === null) {
+          nagNullCount++;
+        }
+      });
+      res.json({nagTrueCount, nagFalseCount, nagNullCount});
+    } catch (error) {
+      console.log(error);
     }
   });
 
@@ -105,16 +137,17 @@ module.exports = db => {
 
   //logic to update the server so nag equals true
   router.post("/nags/toggletrue", (req, res) => {
-    console.log("toggle true req body is ",req.body);
+    console.log("toggle true req body is ", req.body);
     db.query(
       `
       UPDATE nags
       SET completion = true
       WHERE id = $1;
-      `, [req.body.id]
-      ).then(result => {
-        console.log("result of toggle true ", result)
-        res.json(result.data);
+      `,
+      [req.body.id]
+    ).then(result => {
+      console.log("result of toggle true ", result);
+      res.json(result.data);
     });
   });
 
@@ -126,7 +159,8 @@ module.exports = db => {
         UPDATE nags
         SET completion = false
         WHERE id = $1;
-        `, [req.body.id]
+        `,
+      [req.body.id]
     ).then(result => {
       res.json(result.data);
     });
