@@ -3,17 +3,17 @@ const {
   sendSMSToMultiplePeople6AM,
   sendSMSToMultiplePeople12AM
 } = require("../helpers/sendMessages");
+const { goalIdfind } = require("../helpers/goalIdFind")
 
 //IF YOU'RE WORKING ON ROUTES USE req/res convention!!!
+//*****************************************************
 
 module.exports = db => {
   router.get("/nags", async (req, res) => {
     try {
-      // console.log({ session: req.session })
       if (!req.session.userId) {
         return res.status(401).json({ message: "Not authorized" });
       }
-
       const nagsQuery = `
         SELECT nags.id as ID, goal_id, nag_name, completion, date, to_char(date,'FMMonth FMDDth, YYYY') as simple_date
         FROM nags 
@@ -24,13 +24,13 @@ module.exports = db => {
         ORDER BY ID;
         `;
       const data = await db.query(nagsQuery, [req.session.userId]);
-      // console.log(data.rows);
       res.json(data.rows);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   });
-
+   // Route that returns data from nags table that can be used for graphing
+   // *********************************************************************
   router.get("/nags/completiondata", async (req, res) => {
     try {
       if (!req.session.userId) {
@@ -45,7 +45,8 @@ module.exports = db => {
         ORDER BY ID;
         `;
       const data = await db.query(nagsQuery, [req.session.userId]);
-
+      // function that counts the number of nags that are true, false and null for graphing
+      // **********************************************************************************
       let nagTrueCount = 0;
       let nagFalseCount = 0;
       let nagNullCount = 0;
@@ -58,86 +59,74 @@ module.exports = db => {
           nagNullCount++;
         }
       });
-      res.json({nagTrueCount, nagFalseCount, nagNullCount});
+      res.json({ nagTrueCount, nagFalseCount, nagNullCount });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   });
 
   // this route sends a message to the
   // friends of the user when the nag was incomplete at midnight day
-  router.get("/nags/incomplete/eveningnags", (req, res) => {
-    db.query(
+  //****************************************************************
+  router.get("/nags/incomplete/eveningnags", async (req, res) => {
+    try { 
+  const eveningNagData = await db.query(
       `
-    SELECT * FROM nags
-    WHERE completion = false
-    AND date = current_date ;
+      SELECT * FROM nags
+      WHERE completion IS NOT true
+      AND date = current_date;
       `
-    )
-      .then(({ rows: nags }) => {
-        // res.json(nags);
-        const goalIdfind = arr => {
-          let goalIdArr = [];
-          arr.forEach(element => {
-            goalIdArr.push(element.goal_id);
-          });
-          return goalIdArr;
-        };
-        db.query(
+      )
+      if (eveningNagData.rows.length > 0) {
+         const findUsers = await db.query(
           ` 
           SELECT * FROM users
           JOIN goals ON user_id = users.id
-          WHERE goals.id IN (${goalIdfind(nags)})
-            ;`
-        ).then(({ rows: goals }) => {
-          res.json(goals);
-          sendSMSToMultiplePeople12AM(goals);
-        });
-      })
-      .catch(err => {
-        console.error(err);
-      });
+          WHERE ARRAY[goals.id] <@ $1
+            ;`, [goalIdfind(eveningNagData.rows)]
+        );
+          res.json(findUsers.rows);
+          sendSMSToMultiplePeople12AM(findUsers.rows);
+        } else { res.json([])}   
+    } catch(error) {
+      console.error(error);
+      res.status(500).json(error)
+    }
   });
+       
 
   // morning nags
   // send to users at the begining of the day
-  router.get("/nags/incomplete/morningnags", (req, res) => {
-    db.query(
+  //****************************************
+  router.get("/nags/incomplete/morningnags", async (req, res) => {
+    try { 
+  const morningNagData = await db.query(
       `
-    SELECT * FROM nags
-    WHERE completion = false
-    AND date = current_date ;
-    `
-    )
-      .then(({ rows: nags }) => {
-        // res.json(nags);
-        const goalIdfind = arr => {
-          let goalIdArr = [];
-          arr.forEach(element => {
-            goalIdArr.push(element.goal_id);
-          });
-          return goalIdArr;
-        };
-        db.query(
+      SELECT * FROM nags
+      WHERE completion IS NOT true
+      AND date = current_date;
+      `
+      )
+      if (morningNagData.rows.length > 0) {
+        const findUsers = await db.query(
           ` 
           SELECT * FROM users
           JOIN goals ON user_id = users.id
-          WHERE goals.id IN (${goalIdfind(nags)})
-            ;
-            `
-        ).then(({ rows: goals }) => {
-          res.json(goals);
-          //sendSMSToMultiplePeople6AM(goals)
-        });
-      })
-      .catch(err => {
-        console.error(err);
-      });
+          WHERE ARRAY[goals.id] <@ $1
+            ;`, [goalIdfind(morningNagData.rows)]
+        );
+          res.json(findUsers.rows);
+          sendSMSToMultiplePeople6AM(findUsers.rows);
+        } else { console.log("here dbag"), res.json([])}   
+    } catch(error) {
+      console.error(error);
+      res.status(500).json(error)
+    }
   });
 
   //logic to update the server so nag equals true
+  //*********************************************
   router.post("/nags/toggletrue", (req, res) => {
-    console.log("toggle true req body is ", req.body);
     db.query(
       `
       UPDATE nags
@@ -146,14 +135,13 @@ module.exports = db => {
       `,
       [req.body.id]
     ).then(result => {
-      console.log("result of toggle true ", result);
       res.json(result.data);
     });
   });
 
   //logic to update the server so nag equals false
+  //**********************************************
   router.post("/nags/togglefalse", (req, res) => {
-    // console.log(req.body);
     db.query(
       `
         UPDATE nags
