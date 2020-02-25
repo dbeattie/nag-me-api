@@ -10,7 +10,7 @@ module.exports = db => {
         return res.status(401).json({ message: 'Not authorized' });
       }
 
-      db.query(`SELECT id, goal_name, user_id, to_char(start_date,'FMMonth FMDDth, YYYY') as start_date, to_char(end_date,'FMMonth FMDDth, YYYY') as end_date, cron, friend_1_phone_number, friend_2_phone_number FROM goals WHERE user_id = $1 ORDER BY goals.id`, [req.session.userId]).then(({ rows: goals }) => {
+      db.query(`SELECT id, goal_name, user_id, start_date, to_char(start_date,'FMMonth FMDDth, YYYY') as simple_start_date, end_date, to_char(end_date,'FMMonth FMDDth, YYYY') as simple_end_date, cron, friend_1_phone_number, friend_2_phone_number FROM goals WHERE user_id = $1 ORDER BY goals.id`, [req.session.userId]).then(({ rows: goals }) => {
         res.json(
           goals.reduce(
             (previous, current) => ({ ...previous, [current.id]: current }),
