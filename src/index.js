@@ -64,14 +64,14 @@ wss.on("connection", socket => {
 // job.start();
 
 const sendUserNagAt6am = new CronJob('00 00 6 * * *', function() {
-  const d = new Date();
+  const d = convertToTOTime();
   sendSMSToMuliplePeople()
 	console.log('SMS Sent at 6am:', d);
 });
 sendUserNagAt6am.start()
 
 const sendNagStatsToEveryoneInYourGroupAtMidnight = new CronJob('00 00 00 * * *', function() {
-  const d = new Date();
+  const d = convertToTOTime();
   sendSMSToNagUserOnly()
 	console.log('SMS Sent at Midnight:', d);
 });
