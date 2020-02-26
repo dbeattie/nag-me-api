@@ -1,10 +1,11 @@
-
+//function that returns an array of goalIDs
+//*****************************************
 const goalIdfind = arr => {
-    let goalIdArr = [];
-    arr.forEach(element => {
+  let goalIdArr = [];
+  arr.forEach(element => {
     goalIdArr.push(element.goal_id);
-    });
-return goalIdArr;
+  });
+  return goalIdArr;
 };
 
-module.exports = {goalIdfind}
+module.exports = { goalIdfind };
