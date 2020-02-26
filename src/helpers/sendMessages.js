@@ -32,7 +32,7 @@ const sendSMSToNagUserOnly6AM = person => {
   const dateDisplayOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   client.messages
     .create({
-      body: `Greetings from Nag-Me.com!! Hello ${person.user_name}! You are working towards the goal of ${person.goal_name} ending on ${person.end_date.dateDisplayOptions}. Your goal for today is to complete the activity toward the goal of ${person.goal_name} by midnight on ${todaysDate.toLocaleDateString('en-us', dateDisplayOptions)}. When you have completed the daily actvity, please log in to Nag-Me.com to mark today's Nag as complete.`,
+      body: `Greetings from Nag-Me.com!! Hello ${person.user_name}! You are working towards the goal of ${person.goal_name} ending on ${person.end_date.toLocaleDateString('en-us', dateDisplayOptions)}. Your goal for today is to complete the activity toward the goal of ${person.goal_name} by midnight on ${todaysDate.toLocaleDateString('en-us', dateDisplayOptions)}. When you have completed the daily actvity, please log in to Nag-Me.com to mark today's Nag as complete.`,
       from: "+13172155407",
       to: person.phone_number
     })
