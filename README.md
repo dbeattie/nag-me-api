@@ -1,4 +1,4 @@
-# Interview Scheduler API
+# Nag-Me.com
 
 ## Setup
 
@@ -35,13 +35,11 @@ Both of these achieve the same result.
 - Make a `GET` request to `/api/debug/reset` with `curl http://localhost:8001/api/debug/reset`.
 - Use the browser to navigate to `http://localhost:8001/api/debug/reset`.
 
-The `development` data is random. Each time we seed we expect to see different appointments.
-
 ## Api
 
-### Days
+### Users
 
-`GET /api/days`
+`GET /api/users`
 
 Response
 
@@ -49,73 +47,52 @@ Response
 // [
 //   {
 //     "id": 1,
-//     "name": "Monday",
-//     "appointments": [1, 2],
-//     "interviewers": [1, 2],
-//     "spots": 0
+//     "user_name": "Don S",
+//     "email": "don@example.com",
+//     "phone_number": "+1416******"
+//   },
+//   {
+//     "id": 2,
+//     "user_name": "Darren B",
+//     "email": "darren@example.com",
+//     "phone_number": "+177*******"
+//   },
+//   {
+//     "id": 3,
+//     "user_name": "Kevin Z",
+//     "email": "kevin@example.com",
+//     "phone_number": "+1416******"
+//   },
+//   {
+//     "id": 4,
+//     "user_name": "dave jones",
+//     "email": "dave@example.com",
+//     "phone_number": "+1416******"
 //   }
 // ]
 ```
 
-### Appointments
+### Goals
 
-`GET /api/appointments`
-
-Response:
-
-```json
-{
-  // "1": {
-  //   "id": 1,
-  //   "time": "12pm",
-  //   "interview": {
-  //     "student": "Lydia Miller-Jones",
-  //     "interviewer": 1
-  //   }
-  // },
-  // "2": {
-  //   "id": 2,
-  //   "time": "1pm",
-  //   "interview": {
-  //     "student": "Archie Cohen",
-  //     "interviewer": 2
-  //   }
-  // }
-}
-```
-
-`PUT /api/appointments/:id`
-
-Body:
-
-```json
-{
-  // "interview": {
-  //   "student": String,
-  //   "interviewer": Number
-  // }
-}
-```
-
-`DELETE /api/appointments/:id`
-
-### Interviewers
-
-`GET /api/interviewers`
+`GET /api/goals`
 
 Response:
 
 ```json
-// {
-//   "1": {
-//     "id": 1,
-//     "name": "Sylvia Palmer",
-//     "avatar": "https://i.imgur.com/LpaY82x.png"
-//   },
-//   "2": {
-//     "id": 2,
-//     "name": "Tori Malcolm",
-//     "avatar": "https://i.imgur.com/Nmx0Qxo.png"
+// { 
+//   {
+//   - 29: {
+//         id: 29,
+//         goal_name: "Read a novel",
+//         user_id: 1,
+//         start_date: "2020-02-26T05:00:00.000Z",
+//         simple_start_date: "February 26th, 2020",
+//         end_date: "2020-02-29T05:00:00.000Z",
+//         simple_end_date: "February 29th, 2020",
+//         cron: "everyday at 1000",
+//         friend_1_phone_number: "+1416******",
+//         friend_2_phone_number: "+1416******"
+//          }
 //   }
 // }
 ```

@@ -23,4 +23,20 @@ const getTOTime = () => {
   return correctDate(currentDate);
 };
 
-module.exports = { getTOTime };
+const getTOTimeForMessages = () => {
+ //EST
+ offset = -5.0;
+ clientDate = new Date();
+ utc = clientDate.getTime() + clientDate.getTimezoneOffset() * 60000;
+ serverDate = new Date(utc + 3600000 * offset);
+ let currentDate = serverDate.toLocaleString("en-us", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric"
+ });
+ return currentDate;
+}
+
+
+module.exports = { getTOTime, getTOTimeForMessages };

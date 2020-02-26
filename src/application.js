@@ -1,15 +1,12 @@
 const fs = require("fs");
 const path = require("path");
-const cookieSession = require("cookie-session")
+const cookieSession = require("cookie-session");
 const express = require("express");
 const bodyparser = require("body-parser");
 const helmet = require("helmet");
 const cors = require("cors");
-
 const app = express();
-
 const db = require("./db");
-
 const users = require("./routes/users");
 const goals = require("./routes/goals");
 const nags = require("./routes/nags");
@@ -34,15 +31,16 @@ function read(file) {
 
 module.exports = function application(ENV) {
   /*cors is currently hardcoded, it will fail if we push this condition to a new Heroku database or netlify --> Can create an array that should tolerate multiple URL's but will need to look up documentation*/
-  app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
   app.use(helmet());
   app.use(bodyparser.json());
 
-  app.use(cookieSession({
-    name: 'session',
-    keys: ['key1', 'key2']
-    
-  }));
+  app.use(
+    cookieSession({
+      name: "session",
+      keys: ["key1", "key2"]
+    })
+  );
 
   app.use("/api", users(db));
   app.use("/api", goals(db));
@@ -64,11 +62,11 @@ module.exports = function application(ENV) {
               console.log("Database Reset");
               response.status(200).send("Database Reset");
             })
-            .catch(error => console.log(error));
+            .catch(error => console.error(error));
         });
       })
       .catch(error => {
-        console.log(`Error setting up the reset route: ${error}`);
+        console.error(`Error setting up the reset route: ${error}`);
       });
   }
 

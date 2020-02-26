@@ -3,7 +3,7 @@ const {
   sendSMSToMultiplePeople6AM,
   sendSMSToMultiplePeople12AM
 } = require("../helpers/sendMessages");
-const { goalIdfind } = require("../helpers/goalIdFind")
+const { goalIdfind } = require("../helpers/goalIdFind");
 
 //IF YOU'RE WORKING ON ROUTES USE req/res convention!!!
 //*****************************************************
@@ -29,8 +29,8 @@ module.exports = db => {
       console.error(error);
     }
   });
-   // Route that returns data from nags table that can be used for graphing
-   // *********************************************************************
+  // Route that returns data from nags table that can be used for graphing
+  // *********************************************************************
   router.get("/nags/completiondata", async (req, res) => {
     try {
       if (!req.session.userId) {
@@ -69,58 +69,59 @@ module.exports = db => {
   // friends of the user when the nag was incomplete at midnight day
   //****************************************************************
   router.get("/nags/incomplete/eveningnags", async (req, res) => {
-    try { 
-  const eveningNagData = await db.query(
-      `
+    try {
+      const eveningNagData = await db.query(
+        `
       SELECT * FROM nags
       WHERE completion IS NOT true
       AND date = current_date;
       `
-      )
+      );
       if (eveningNagData.rows.length > 0) {
-         const findUsers = await db.query(
+        const findUsers = await db.query(
           ` 
           SELECT * FROM users
           JOIN goals ON user_id = users.id
           WHERE ARRAY[goals.id] <@ $1
-            ;`, [goalIdfind(eveningNagData.rows)]
+            ;`,
+          [goalIdfind(eveningNagData.rows)]
         );
           res.json(findUsers.rows);
           sendSMSToMultiplePeople12AM(findUsers.rows);
         } else { console.log("Your evening nag query is empty!"), res.json([])}   
     } catch(error) {
       console.error(error);
-      res.status(500).json(error)
+      res.status(500).json(error);
     }
   });
-       
 
   // morning nags
   // send to users at the begining of the day
   //****************************************
   router.get("/nags/incomplete/morningnags", async (req, res) => {
-    try { 
-  const morningNagData = await db.query(
-      `
+    try {
+      const morningNagData = await db.query(
+        `
       SELECT * FROM nags
       WHERE completion IS NOT true
       AND date = current_date;
       `
-      )
+      );
       if (morningNagData.rows.length > 0) {
         const findUsers = await db.query(
           ` 
           SELECT * FROM users
           JOIN goals ON user_id = users.id
           WHERE ARRAY[goals.id] <@ $1
-            ;`, [goalIdfind(morningNagData.rows)]
+            ;`,
+          [goalIdfind(morningNagData.rows)]
         );
           res.json(findUsers.rows);
           sendSMSToMultiplePeople6AM(findUsers.rows);
         } else { console.log("Your morning nag query is empty!"), res.json([])}   
     } catch(error) {
       console.error(error);
-      res.status(500).json(error)
+      res.status(500).json(error);
     }
   });
 

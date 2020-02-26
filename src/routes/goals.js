@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const {getTOTime} = require("../helpers/getTOTime")
+const { getTOTime } = require("../helpers/getTOTime");
 
 //IF YOU'RE WORKING ON ROUTES USE req/res convention!!!
 
@@ -12,7 +12,6 @@ const getDate = dateTime => {
 module.exports = db => {
   router.get("/goals", async (req, res) => {
     try {
-      // console.log({ session: req.session })
       if (!req.session.userId) {
         return res.status(401).json({ message: "Not authorized" });
       }
@@ -29,25 +28,21 @@ module.exports = db => {
         );
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   });
-
-  //async function(req, res)???
 
   router.put("/goals/new", async (req, res) => {
     try {
       // This timeout was added before switching to async/await, not sure they are needed anymore?
       // req.connection.setTimeout( 1000 * 60 * 10 );
-      // console.log("Session REQUIRED?",{ session: req.session })
+
       if (!req.session.userId) {
         return res.status(401).json({ message: "Not authorized" });
       }
 
       const { goal, startdate, enddate, phone1, phone2, nag } = req.body;
       const newGoal = { goal, startdate, enddate, phone1, phone2, nag };
-
-      // console.log("NEWGOAL:", newGoal)
 
       const goalQueryStr =
         "INSERT INTO goals(goal_name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *";
@@ -65,16 +60,16 @@ module.exports = db => {
 
       //Puts goal data into database
       const goalQuery = await db.query(goalQueryStr, values);
-      console.log("Goal Inserted!")
+      console.log("Goal Inserted!");
 
       //Creates an array of nag dates from today until the completion date given
       const getDateArr = () => {
         let nagDateArr = [];
         const trimmedStartDate = getTOTime();
-        console.log("trim start date is ", trimmedStartDate);
+
         const trimmedEndDate = getDate(newGoal.enddate);
         const actualEndDate = new Date(trimmedEndDate);
-        console.log("actual end date is", actualEndDate);
+
         for (
           let nagDate = new Date(trimmedStartDate);
           nagDate <= actualEndDate;
@@ -119,7 +114,7 @@ module.exports = db => {
         message: "Goals and Nags Inserted!"
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   });
 
@@ -127,7 +122,6 @@ module.exports = db => {
     try {
       // This timeout was added before switching to async/await, not sure they are needed anymore?
       // req.connection.setTimeout( 1000 * 60 * 100 );
-      // console.log('REQUIRED BODY:', req.body.id);
 
       const queryString = "DELETE FROM goals WHERE id = $1";
       const values = [req.body.id];
@@ -144,15 +138,12 @@ module.exports = db => {
         message: "I'm the backend, confirming goal/nag deletion!"
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   });
 
   router.put("/goals/edit", async (req, res) => {
     req.connection.setTimeout(1000 * 60 * 100);
-
-    // console.log("I am the req.body:", req.body);
-
     const updateGoalQueryStr =
       "UPDATE goals SET goal_name = $1, start_date = $2, end_date = $3, friend_1_phone_number = $4, friend_2_phone_number = $5 WHERE id = $6 RETURNING *";
     const newGoalvalues = [
@@ -167,12 +158,8 @@ module.exports = db => {
     const updateGoalQuery = await db.query(updateGoalQueryStr, newGoalvalues);
     console.log("Goal updated in the DB!");
 
-    // console.log("I am the updateGoal Object:", updateGoalQuery.rows);
-
     const beginningDate = getDate(req.body.startDate);
     const completionDate = getDate(req.body.endDate);
-
-    // console.log("new Date info is here: ", beginningDate, completionDate);
 
     let dateArray = [];
     let actualEndDate = new Date(completionDate);
@@ -183,7 +170,6 @@ module.exports = db => {
     ) {
       dateArray.push(getDate(d.toISOString()));
     }
-    // console.log(dateArray);
 
     const deleteNagsQuery = db.query(
       `DELETE FROM nags WHERE goal_id = ${req.body.goalId}`
@@ -216,7 +202,6 @@ module.exports = db => {
       actualFinalNagUpdateQuery.length - 2
     );
     actualFinalNagUpdateQuery += `;`;
-    // console.log(actualFinalNagUpdateQuery);
 
     const nagsUpdateQuery = await db.query(actualFinalNagUpdateQuery);
     console.log("New Nags Updated!");
