@@ -86,12 +86,10 @@ module.exports = db => {
             ;`,
           [goalIdfind(eveningNagData.rows)]
         );
-        res.json(findUsers.rows);
-        sendSMSToMultiplePeople12AM(findUsers.rows);
-      } else {
-        res.json([]);
-      }
-    } catch (error) {
+          res.json(findUsers.rows);
+          sendSMSToMultiplePeople12AM(findUsers.rows);
+        } else { console.log("Your evening nag query is empty!"), res.json([])}   
+    } catch(error) {
       console.error(error);
       res.status(500).json(error);
     }
@@ -118,12 +116,10 @@ module.exports = db => {
             ;`,
           [goalIdfind(morningNagData.rows)]
         );
-        res.json(findUsers.rows);
-        sendSMSToMultiplePeople6AM(findUsers.rows);
-      } else {
-        res.json([]);
-      }
-    } catch (error) {
+          res.json(findUsers.rows);
+          sendSMSToMultiplePeople6AM(findUsers.rows);
+        } else { console.log("Your morning nag query is empty!"), res.json([])}   
+    } catch(error) {
       console.error(error);
       res.status(500).json(error);
     }
