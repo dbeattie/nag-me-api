@@ -65,8 +65,7 @@ module.exports = db => {
 
       //Puts goal data into database
       const goalQuery = await db.query(goalQueryStr, values);
-      console.log("Goal Inserted!", goalQuery.rows[0].id);
-      console.log("get to time is", getTOTime());
+      console.log("Goal Inserted!")
 
       //Creates an array of nag dates from today until the completion date given
       const getDateArr = () => {

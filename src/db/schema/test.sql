@@ -16,7 +16,7 @@ VALUES
 INSERT INTO goals
     (goal_name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number)
 VALUES
-    ('Learn the guitar', 1, '2020-01-01', '2020-08-1', 'everyday at 1000', '+17788480760', '+14166487618');
+    ('Learn the guitar', 1, '2020-02-25', '2020-03-01', 'everyday at 1000', '+17788480760', '+14166487618');
 INSERT INTO goals
     (goal_name, user_id, start_date, end_date, cron, friend_1_phone_number, friend_2_phone_number)
 VALUES
@@ -34,48 +34,61 @@ VALUES
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (1, 'Did you practice guitar for 45 mins today?', 'null', '2020-02-19', '1000');
+    (1, 'Did you practice guitar for 45 mins today?', null, '2020-02-25', '1000');
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (1, 'Did you practice guitar for 45 mins today?', 'null', '2020-02-20', '1000');
+    (1, 'Did you practice guitar for 45 mins today?', null, '2020-02-26', '1000');
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (1, 'Did you practice guitar for 45 mins today?', 'null', '2020-02-21', '1000');
+    (1, 'Did you practice guitar for 45 mins today?', null, '2020-02-27', '1000');
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (2, 'Did you read War and Peace today?', 'null', '2020-02-19', '1900');
+    (1, 'Did you practice guitar for 45 mins today?', null, '2020-02-28', '1000');
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (2, 'Did you read War and Peace today?', 'null', '2020-02-20', '1900');
+    (1, 'Did you practice guitar for 45 mins today?', null, '2020-02-29', '1000');
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (2, 'Did you read War and Peace today?', 'null', '2020-02-21', '1900');
+    (1, 'Did you practice guitar for 45 mins today?', null, '2020-03-01', '1000');    
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (3, 'Did you do CodeWars today?', 'null', '2020-02-19', '1100');
+    (2, 'Did you read War and Peace today?', null, '2020-02-25', '1900');
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (3, 'Did you do CodeWars today?', 'null', '2020-02-20', '1100');
+    (2, 'Did you read War and Peace today?', null, '2020-02-26', '1900');
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (3, 'Did you do CodeWars today?', 'null', '2020-02-21', '1100');
+    (2, 'Did you read War and Peace today?', null, '2020-02-27', '1900');
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (4, 'Did you practice white boarding today?', 'null', '2020-02-19', '1100');
+    (3, 'Did you do CodeWars today?', null, '2020-02-25', '1100');
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (4, 'Did you practice white boarding today?', 'null', '2020-02-20', '1900');
+    (3, 'Did you do CodeWars today?', null, '2020-02-26', '1100');
 INSERT INTO nags
     (goal_id, nag_name, completion, date, time )
 VALUES
-    (4, 'Did you practice white boarding today?', 'null', '2020-02-21', '2200');
+    (3, 'Did you do CodeWars today?', null, '2020-02-27', '1100');
+INSERT INTO nags
+    (goal_id, nag_name, completion, date, time )
+VALUES
+    (4, 'Did you practice white boarding today?', null, '2020-02-25', '1100');
+INSERT INTO nags
+    (goal_id, nag_name, completion, date, time )
+VALUES
+    (4, 'Did you practice white boarding today?', null, '2020-02-26', '1900');
+INSERT INTO nags
+    (goal_id, nag_name, completion, date, time )
+VALUES
+    (4, 'Did you practice white boarding today?', null, '2020-02-27', '2200');
+
