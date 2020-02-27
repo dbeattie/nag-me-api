@@ -1,12 +1,14 @@
 # Nag-Me.com
 
-## Setup
+Nag.me is a goal attainment app that helps user achieve their goals by holding them accountable to daily actions. The app holds the user accountable by texting Nags every morning and texting your friends at night to let them know if you didn't follow through that day.
+
+## Setupgi
 
 Install dependencies with `npm install`.
 
 ## Run The Server
 
-```sh
+```shch
 npm start
 ```
 
