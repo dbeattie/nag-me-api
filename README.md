@@ -46,32 +46,32 @@ Both of these achieve the same result.
 Response
 
 ```json
-// [
-//   {
-//     "id": 1,
-//     "user_name": "Don S",
-//     "email": "don@example.com",
-//     "phone_number": "+1416******"
-//   },
-//   {
-//     "id": 2,
-//     "user_name": "Darren B",
-//     "email": "darren@example.com",
-//     "phone_number": "+177*******"
-//   },
-//   {
-//     "id": 3,
-//     "user_name": "Kevin Z",
-//     "email": "kevin@example.com",
-//     "phone_number": "+1416******"
-//   },
-//   {
-//     "id": 4,
-//     "user_name": "dave jones",
-//     "email": "dave@example.com",
-//     "phone_number": "+1416******"
-//   }
-// ]
+ [
+   {
+     "id": 1,
+     "user_name": "Don S",
+     "email": "don@example.com",
+     "phone_number": "+1416******"
+   },
+   {
+     "id": 2,
+     "user_name": "Darren B",
+     "email": "darren@example.com",
+     "phone_number": "+177*******"
+   },
+   {
+     "id": 3,
+     "user_name": "Kevin Z",
+     "email": "kevin@example.com",
+     "phone_number": "+1416******"
+   },
+   {
+     "id": 4,
+     "user_name": "dave jones",
+     "email": "dave@example.com",
+     "phone_number": "+1416******"
+   }
+ ]
 ```
 
 ### Goals
@@ -81,20 +81,20 @@ Response
 Response:
 
 ```json
-// { 
-//   {
-//   - 29: {
-//         id: 29,
-//         goal_name: "Read a novel",
-//         user_id: 1,
-//         start_date: "2020-02-26T05:00:00.000Z",
-//         simple_start_date: "February 26th, 2020",
-//         end_date: "2020-02-29T05:00:00.000Z",
-//         simple_end_date: "February 29th, 2020",
-//         cron: "everyday at 1000",
-//         friend_1_phone_number: "+1416******",
-//         friend_2_phone_number: "+1416******"
-//          }
-//   }
-// }
+ { 
+   {
+   - 29: {
+         id: 29,
+         goal_name: "Read a novel",
+         user_id: 1,
+         start_date: "2020-02-26T05:00:00.000Z",
+         simple_start_date: "February 26th, 2020",
+         end_date: "2020-02-29T05:00:00.000Z",
+         simple_end_date: "February 29th, 2020",
+         cron: "everyday at 1000",
+         friend_1_phone_number: "+1416******",
+         friend_2_phone_number: "+1416******"
+          }
+   }
+ }
 ```
