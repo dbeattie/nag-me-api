@@ -82,7 +82,7 @@ Response:
 
 ```json
  { 
-   {
+    {
    - 29: {
          id: 29,
          goal_name: "Read a novel",
@@ -94,7 +94,7 @@ Response:
          cron: "everyday at 1000",
          friend_1_phone_number: "+1416******",
          friend_2_phone_number: "+1416******"
-          }
-   }
+         }
+    }
  }
 ```
