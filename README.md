@@ -83,7 +83,7 @@ Response:
 ```json
  { 
     {
-   - 29: {
+    29: {
          id: 29,
          goal_name: "Read a novel",
          user_id: 1,
